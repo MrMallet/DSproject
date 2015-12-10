@@ -118,7 +118,8 @@ public class Vigenere { //Blaise de Vigenere is (incorrectly) accredited with in
 	}
 	
 	public static void main(String[] args) {
-		Vigenere v = new Vigenere("sean");
+		Vigenere v = new Vigenere("JAVma");
+		
 		String cypherTxt = v.doCypher("GalwaGalwaGalwa", true);
 		System.out.println(cypherTxt);
 		
