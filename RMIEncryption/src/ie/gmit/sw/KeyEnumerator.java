@@ -35,7 +35,7 @@ public class KeyEnumerator {
 			
 			do{
 				counter++;
-				String result = new Vigenere(new String(key)).doCypher("YELJSKAYOEGNDAA", false);
+				String result = new Vigenere(new String(key)).doCypher("UVSDTQBNESGGQZCIWHR", false);
 				float score = map.getScore(result);
 				
 				//System.out.println(score);
@@ -49,14 +49,14 @@ public class KeyEnumerator {
 			}while ((key = getNextKey(key)) != null);
 		}
 		System.out.println("Enumerated " + counter + " keys.");
-		String yahoo = new Vigenere(bestKey).doCypher("YELJSKAYOEGNDAA", false);
+		String yahoo = new Vigenere(bestKey).doCypher("UVSDTQBNESGGQZCIWHR", false);
 		System.out.println(yahoo);
 		
 		return yahoo;
 	}
 	
 	public static void main(String[] args) throws Exception {
-		new KeyEnumerator().crackCypher("YELJSKAYOEGNDAA", 5);
+		new KeyEnumerator().crackCypher("UVSDTQBNESGGQZCIWHR", 5);
 		
 	}
 }

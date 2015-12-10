@@ -21,7 +21,7 @@ public class QuadgramMap {
 			
 			if (map.get(next) != null){
 				float frequency = (float)map.get(next);
-				float total = (float)map.size();
+				//float total = (float)map.size();
 				
 				score += Math.log10((frequency/*/total*/));
 			}
@@ -58,6 +58,7 @@ public class QuadgramMap {
 		}
 		br.close();
 		System.out.println(map);
+		//System.out.println(map.size());
 	}
 	
 	public static void main(String[] args) throws Exception {

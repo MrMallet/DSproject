@@ -2,7 +2,7 @@ package ie.gmit.sw.client;
 
 import java.rmi.Naming;
 
-import ie.gmit.sw.VigenereBreaker;
+import ie.gmit.sw.*;
 
 public class Client {
 	
@@ -13,6 +13,6 @@ public class Client {
 		 */
 		VigenereBreaker vb = (VigenereBreaker) Naming.lookup("///cypher-service");
 		
-		String result = vb.decrypt("asldknasldjn", 7);
+		String result = vb.decrypt("UVSQWMLHNFWMUCLIWHE", 4);
 	}
 }
