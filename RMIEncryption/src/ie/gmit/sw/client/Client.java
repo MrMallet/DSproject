@@ -13,6 +13,7 @@ public class Client {
 		 */
 		VigenereBreaker vb = (VigenereBreaker) Naming.lookup("///cypher-service");
 		
-		String result = vb.decrypt("UVSQWMLHNFWMUCLIWHE", 4);
+		String result = vb.decrypt("UVSDGGHERVCDUCLVGBA", 4);
+		System.out.println(result);
 	}
 }
