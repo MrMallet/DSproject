@@ -9,9 +9,10 @@ public class VigenereBreakerImpl extends UnicastRemoteObject implements Vigenere
 
 	private static final long serialVersionUID = 1L;
 	private KeyEnumerator breaker;
+	private static String filename; 
 	
 	public VigenereBreakerImpl() throws Exception {
-		breaker = new KeyEnumerator();
+		breaker = new KeyEnumerator(filename);
 		//UnicastRemoteObject.exportObject(this);
 		
 	}
@@ -22,6 +23,8 @@ public class VigenereBreakerImpl extends UnicastRemoteObject implements Vigenere
 
 	public static void main(String[] args) throws Exception {
 		System.out.println("starting remote service");
+		
+		filename =args[0];
 		
 		LocateRegistry.createRegistry(1099);
 		

@@ -7,8 +7,8 @@ public class KeyEnumerator {
 	private float bestScore;
 	private String bestKey;
 	
-	public KeyEnumerator() throws Exception {
-		map = new QuadgramMap("./stuff.txt");
+	public KeyEnumerator(String filename) throws Exception {
+		map = new QuadgramMap(filename);
 	}
 	
 	private char[] getNextKey(char[] key){
@@ -42,7 +42,7 @@ public class KeyEnumerator {
 				if(score > bestScore){
 					bestScore = score;
 					bestKey = new String(key);
-					//System.out.println(bestKey);
+					//System.out.println("bestscore: "+ bestScore  + " bestkey: " +bestKey + " result: " + result);
 				}
 				//System.out.println(result);
 				
@@ -56,7 +56,7 @@ public class KeyEnumerator {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		new KeyEnumerator().crackCypher("UVSDGGHERVCDUCLVGBA", 4);
+		new KeyEnumerator("stuff.txt").crackCypher("UVSDGGHERVCDUCLVGBA", 4);
 		
 	}
 }

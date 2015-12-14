@@ -9,12 +9,17 @@ public class VigenereRequestHandler {
 	private int MaximumNoOfRequests = 10;
 	private BlockingQueue<Request> queue = new ArrayBlockingQueue<Request>(MaximumNoOfRequests);
 	private Map<Long,String> out = new ConcurrentHashMap<Long, String>();
+	
+	
 	public void add (final Request r){
 		try{
-			queue.put(r);//blocks if queue is full
+			//blocks if queue is full
 			new Thread(new Runnable(){
 				public void run(){
 					try{
+						queue.put(r);
+						out.put(r.getJobNumber(), r.getCypherText());
+						
 						
 					}catch(Exception e){
 						

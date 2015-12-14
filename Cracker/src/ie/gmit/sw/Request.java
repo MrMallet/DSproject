@@ -30,5 +30,4 @@ public class Request {
 			this.jobNumber = jobNumber;
 		}
 		
-		//constructors and getters/setters;
 }

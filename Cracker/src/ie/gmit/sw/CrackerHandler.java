@@ -1,13 +1,19 @@
-package ie.gmit.sw.servlet;
+package ie.gmit.sw;
 
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
+
 public class CrackerHandler extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String remoteHost = null;
 	private static long jobNumber = 0; 
-
+	private VigenereRequestHandler reqHand = new VigenereRequestHandler();
+		
 	public void init() throws ServletException {
 		ServletContext ctx = getServletContext();
 		remoteHost = ctx.getInitParameter("RMI_SERVER"); //Reads the value from the <context-param> in web.xml
@@ -18,7 +24,7 @@ public class CrackerHandler extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 
 		
-		int maxKeyLength = Integer.parseInt(req.getParameter("frmMaxKeyLength"));
+		int maxKeySize = Integer.parseInt(req.getParameter("frmMaxKeySize"));
 		String cypherText = req.getParameter("frmCypherText");
 		String taskNumber = req.getParameter("frmStatus");
 
@@ -30,19 +36,20 @@ public class CrackerHandler extends HttpServlet {
 		if (taskNumber == null){
 			taskNumber = new String("T" + jobNumber);
 			jobNumber++;
+			Request request = new Request(cypherText, maxKeySize, jobNumber);
+
 			//Add job to in-queue
+			reqHand.add(request); 
 		}else{
 			//Check out-queue for finished job
 		}
-		
-		
 		
 		out.print("<H1>Processing request for Job#: " + taskNumber + "</H1>");
 		out.print("<div id=\"r\"></div>");
 		
 		
 		out.print("RMI Server is located at " + remoteHost);
-		out.print("<P>Maximum Key Length: " + maxKeyLength);		
+		out.print("<P>Maximum Key Size: " + maxKeySize);		
 		out.print("<P>CypherText: " + cypherText);
 		out.print("<P>This servlet should only be responsible for handling client request and returning responses. Everything else should be handled by different objects.");
 		out.print("<P>Note that any variables declared inside this doGet() method are thread safe. Anything defined at a class level is shared between HTTP requests.");				
@@ -51,7 +58,7 @@ public class CrackerHandler extends HttpServlet {
 		out.print("<P> Next Steps:");	
 		out.print("<OL>");
 		out.print("<LI>Generate a big random number to use a a job number, or just increment a static long variable declared at a class level, e.g. jobNumber");	
-		out.print("<LI>Create some type of a message request object from the maxKeyLength, cypherText and jobNumber.");	
+		out.print("<LI>Create some type of a message request object from the maxKeySize, cypherText and jobNumber.");	
 		out.print("<LI>Add the message request object to a LinkedList or BlockingQueue (the IN-queue)");			
 		out.print("<LI>Return the jobNumber to the client web browser with a wait interval using <meta http-equiv=\"refresh\" content=\"10\">. The content=\"10\" will wait for 10s.");	
 		out.print("<LI>Have some process check the LinkedList or BlockingQueue for message requests ");	
@@ -61,7 +68,7 @@ public class CrackerHandler extends HttpServlet {
 		out.print("</OL>");	
 		
 		out.print("<form name=\"frmCracker\">");
-		out.print("<input name=\"frmMaxKeyLength\" type=\"hidden\" value=\"" + maxKeyLength + "\">");
+		out.print("<input name=\"frmMaxKeySize\" type=\"hidden\" value=\"" + maxKeySize + "\">");
 		out.print("<input name=\"frmCypherText\" type=\"hidden\" value=\"" + cypherText + "\">");
 		out.print("<input name=\"frmStatus\" type=\"hidden\" value=\"" + taskNumber + "\">");
 		out.print("</form>");								
@@ -76,7 +83,7 @@ public class CrackerHandler extends HttpServlet {
 		 *  Next Steps: just in case you removed the above....
 		 *-----------------------------------------------------------------------
 		 * 1) Generate a big random number to use a a job number, or just increment a static long variable declared at a class level, e.g. jobNumber
-		 * 2) Create some type of a "message request" object from the maxKeyLength, cypherText and jobNumber.
+		 * 2) Create some type of a "message request" object from the maxKeySize, cypherText and jobNumber.
 		 * 3) Add the "message request" object to a LinkedList or BlockingQueue (the IN-queue)
 		 * 4) Return the jobNumber to the client web browser with a wait interval using <meta http-equiv="refresh" content="10">. The content="10" will wait for 10s.
 		 * 4) Have some process check the LinkedList or BlockingQueue for "message requests" 
